@@ -72,13 +72,13 @@
 		<br> 
 		Last Name:<input id="p_lname" name="p_lname" type="text" class="form-control form-control-sm">
 		<br> 
-		Date of Birth: <input id="p_dob" name="p_dob" type="text" class="form-control form-control-sm">
+		Date of Birth: <input id="p_dob" name="p_dob" type="text" class="form-control form-control-sm" placeholder="YYYY-MM-DD">
 		<br>
 		Address: <input id="p_address" name="p_address" type="text" class="form-control form-control-sm">
 		<br>
 		Phone: <input id="p_phone" name="p_phone" type="text" class="form-control form-control-sm">
 		<br>
-		Email: <input id="p_email" name="p_email" type="text" class="form-control form-control-sm">
+		Email: <input id="p_email" name="p_email" type="text" class="form-control form-control-sm" placeholder="example@gmail.com">
 		<br>
 		Gender: <input id="p_gender" name="p_gender" type="text" class="form-control form-control-sm">
 		<br>
