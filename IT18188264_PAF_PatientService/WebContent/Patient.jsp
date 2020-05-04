@@ -1,51 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="com.Patient"%>    
-    
-<%
-	session.setAttribute("statusMsg", "");
-	System.out.println("Trying to process.............");
-
-	if (request.getParameter("p_nic") != null) {
-		System.out.println("jjjjjjjjj");
-		Patient patientObj = new Patient();
-		String stsMsg = "";
-		//Insert--------------------------
-		if (request.getParameter("hidPatientIDSave") == "") {
-			System.out.println("kkk");
-			 stsMsg=patientObj.insertPatient(request.getParameter("p_nic"),
-					request.getParameter("p_fname"),
-					request.getParameter("p_lname"), 
-					request.getParameter("p_dob"), 
-					request.getParameter("p_address"), 
-					request.getParameter("p_phone"), 
-					request.getParameter("p_email"), 
-					request.getParameter("p_gender"));
-		} else//Update----------------------
-		{
-			stsMsg=patientObj.updatePatient(request.getParameter("hidPatientIDSave"),
-					request.getParameter("p_nic"),
-					request.getParameter("p_fname"),
-					request.getParameter("p_lname"), 
-					request.getParameter("p_dob"),
-					request.getParameter("p_address"), 
-					request.getParameter("p_phone"),
-					request.getParameter("p_email"),
-					request.getParameter("p_gender"));
-		}
-		session.setAttribute("statusMsg", stsMsg);
-	}
-	//Delete-----------------------------
-	if (request.getParameter("hidPatientIDDelete") != null) {
-		Patient patientObj = new Patient();
-		String stsMsg=patientObj.deletePatient(request.getParameter("hidPatientIDDelete"));
-		session.setAttribute("statusMsg", stsMsg);
-	}
-%>
-    
-    
-    
-    
+        
  
 <!DOCTYPE html>
 <html>
@@ -64,7 +20,7 @@
 
 	<h1>Patient Registration</h1>
 	
-		<form id="formPatient" name="formPatient" method="post" action="Patient.jsp">
+		<form id="formPatient" name="formPatient">
 		
 		Patient NIC:<input id="p_nic" name="p_nic" type="text"class="form-control form-control-sm">
 		<br> 
@@ -88,26 +44,19 @@
 		</form>
 
 
-		<div id="alertSuccess" class="alert alert-success">
+		<div id="alertSuccess" class="alert alert-success"></div>
 
-  		<%
- 			 out.print(session.getAttribute("statusMsg"));
-  
-  		%>
-
-
-</div>
-
-<div id="alertError" class="alert alert-danger"></div>
+		<div id="alertError" class="alert alert-danger"></div>
   
    <br>
+   <div id="divPatientGrid">
    
    <%
    
       Patient patientObj = new Patient();
       out.print(patientObj.readPatients());
    %>
-   
+   </div>
    
    </div>
    </div>

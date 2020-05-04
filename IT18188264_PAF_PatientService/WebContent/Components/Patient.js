@@ -37,8 +37,73 @@ $(document).on("click", "#btnSave", function(event)
 		return;
 	}
 // If valid------------------------
-$("#formPatient").submit();
+	var type = ($("#hidPatientIDSave").val() == "") ? "POST" : "PUT";
+
+	$.ajax({
+		url : "PatientAPI",
+		type : type,
+		data : $("#formPatient").serialize(),
+		dataType : "text",
+		complete : function(response, status) {
+			onPatientSaveComplete(response.responseText, status);
+		}
+	});
+//$("#formPatient").submit();
 });
+
+function onPatientSaveComplete(response, status) {
+	if (status == "success") {
+		var resultSet = JSON.parse(response);
+		if (resultSet.status.trim() == "success") {
+			$("#alertSuccess").text("Successfully saved.");
+			$("#alertSuccess").show();
+			$("#divPatientGrid").html(resultSet.data);
+		} else if (resultSet.status.trim() == "error") {
+			$("#alertError").text(resultSet.data);
+			$("#alertError").show();
+		}
+	} else if (status == "error") {
+		$("#alertError").text("Error while saving.");
+		$("#alertError").show();
+	} else {
+		$("#alertError").text("Unknown error while saving..");
+		$("#alertError").show();
+	}
+	$("#hidPatientIDSave").val("");
+	$("#formPatient")[0].reset();
+}
+
+$(document).on("click", ".btnRemove", function(event) {
+	$.ajax({
+		url : "PatientAPI",
+		type : "DELETE",
+		data : "patient_id=" + $(this).data("patientid"),
+		dataType : "text",
+		complete : function(response, status) {
+			onPatientDeleteComplete(response.responseText, status);
+		}
+	});
+});
+
+function onPatientDeleteComplete(response, status) {
+	if (status == "success") {
+		var resultSet = JSON.parse(response);
+		if (resultSet.status.trim() == "success") {
+			$("#alertSuccess").text("Successfully deleted.");
+			$("#alertSuccess").show();
+			$("#divPatientGrid").html(resultSet.data);
+		} else if (resultSet.status.trim() == "error") {
+			$("#alertError").text(resultSet.data);
+			$("#alertError").show();
+		}
+	} else if (status == "error") {
+		$("#alertError").text("Error while deleting.");
+		$("#alertError").show();
+	} else {
+		$("#alertError").text("Unknown error while deleting..");
+		$("#alertError").show();
+	}
+}
 
 $(document).on("click", ".btnUpdate", function(event)
 		{

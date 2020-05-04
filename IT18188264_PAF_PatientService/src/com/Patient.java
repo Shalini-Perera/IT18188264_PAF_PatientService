@@ -39,9 +39,12 @@ public class Patient {
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			output = "Inserted successfully";
+			//output = "Inserted successfully";
+			String newPatient = readPatients();
+			output = "{\"status\":\"success\", \"data\": \"" + newPatient + "\"}";
 		} catch (Exception e) {
-			output = "Error while inserting Patient.";
+			//output = "Error while inserting Patient.";
+			output = "{\"status\":\"error\", \"data\": \"Error while inserting patient.\"}";
 			System.err.println(e.getMessage());
 		}
 		return output;
@@ -79,10 +82,7 @@ public class Patient {
 				String p_gender = rs.getString("p_gender");
 
 				// Add into the html table
-				output += "<tr><td><input id=\"hidPatientIDUpdate\""
-						+ "name=\"hidPatientIDUpdate\""
-						+ "type=\"hidden\" value=\"" + patient_id + "\">"
-				+ p_nic + "</td>";
+				output += "<tr><td><input id='hidPatientIDUpdate'name='hidPatientIDUpdate' type='hidden' value='" + patient_id + "'>" + p_nic + "</td>";
 				output += "<td>" + p_fname + "</td>";
 				output += "<td>" + p_lname + "</td>";
 				output += "<td>" + p_dob + "</td>";
@@ -92,14 +92,10 @@ public class Patient {
 				output += "<td>" + p_gender + "</td>";
 
 				// buttons
-				output += "<td><input name=\"btnUpdate\""
-						+ "type=\"button\" value=\"Update\""
-						+ "class=\" btnUpdate btn btn-secondary\"></td>"
-						+ "<td><form method=\"post\" action=\"Patient.jsp\">"
-						+ "<input name=\"btnRemove\" type=\"submit\""
-						+ "value=\"Remove\" class=\"btn btn-danger\">"
-						+ "<input name=\"hidPatientIDDelete\" type=\"hidden\""
-						+ "value=\"" + patient_id + "\">" + "</form></td></tr>";
+				
+				output += "<td><input name='btnUpdate' type='button' value='Update' class='btnUpdate btn btn-secondary'></td>"
+						+ "<td><input name='btnRemove' type='button'value='Remove' class='btnRemove btn btn-danger' data-patientid='"
+						+ patient_id + "'>" + "</td></tr>";
 			}
 			con.close();
 			// Complete the html table
@@ -135,9 +131,12 @@ public class Patient {
 // execute the statement
 			preparedStmt.execute();
 			con.close();
-			output = "Updated successfully";
+			//output = "Updated successfully";
+			String newPatient = readPatients();
+			output = "{\"status\":\"success\", \"data\": \"" + newPatient + "\"}";
 		} catch (Exception e) {
-			output = "Error while updating the patient.";
+			//output = "Error while updating the patient.";
+			output = "{\"status\":\"error\", \"data\": \"Error while updating patient.\"}";
 			System.err.println(e.getMessage());
 		}
 		return output;
@@ -157,9 +156,12 @@ public class Patient {
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			output = "Deleted successfully";
+			//output = "Deleted successfully";
+			String newPatient = readPatients();
+			output = "{\"status\":\"success\", \"data\": \"" + newPatient + "\"}";
 		} catch (Exception e) {
-			output = "Error while deleting patient....";
+			//output = "Error while deleting patient....";
+			output = "{\"status\":\"error\", \"data\": \"Error while deleting patient.\"}";
 			System.err.println(e.getMessage());
 		}
 		return output;
